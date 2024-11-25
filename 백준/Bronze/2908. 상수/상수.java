@@ -10,24 +10,9 @@ public class Main {
 
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        int A = Integer.parseInt(st.nextToken());
-        int B = Integer.parseInt(st.nextToken());
+        int A = Integer.parseInt(new StringBuilder(st.nextToken()).reverse().toString());
+        int B = Integer.parseInt(new StringBuilder(st.nextToken()).reverse().toString());
 
-        int a_i = A / 100;
-        int a_j = (A % 100) / 10;
-        int a_k = (A % 100) % 10;
-
-        int b_i = B / 100;
-        int b_j = (B % 100) / 10;
-        int b_k = (B % 100) % 10;
-
-        int a = a_k * 100 + a_j * 10 + a_i;
-        int b = b_k * 100 + b_j * 10 + b_i;
-
-        if (a > b) {
-            System.out.println(a);
-        } else {
-            System.out.println(b);
-        }
+        System.out.println(A > B ? A : B);
     }
 }
