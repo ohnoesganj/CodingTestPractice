@@ -7,65 +7,61 @@ import java.util.Collections;
 public class Main {
     static int[] dx = {1, -1, 0, 0};
     static int[] dy = {0, 0, 1, -1};
-    static boolean[][] visited;
     static int[][] arr;
-    static int count = 0;
-    static int num = 0;
-    static int nowX, nowY, N;
-
+    static boolean[][] visited;
+    static int cnt;
+    static int N;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
+        ArrayList<Integer> list = new ArrayList<>();
 
         N = Integer.parseInt(br.readLine());
-
         arr = new int[N][N];
         visited = new boolean[N][N];
+        cnt = 1;
 
         for (int i = 0; i < N; i++) {
             String str = br.readLine();
             for (int j = 0; j < N; j++) {
-                arr[i][j] = Character.getNumericValue(str.charAt(j));
+                arr[i][j] = str.charAt(j) - '0';
             }
         }
 
-        ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (!visited[i][j] && (arr[i][j] == 1)) {
-                    count = 0;
-                    num++;
+                if (!visited[i][j] && arr[i][j] == 1) {
+                    cnt = 1;
                     dfs(i, j);
-                    list.add(count);
+                    list.add(cnt);
                 }
             }
         }
 
         Collections.sort(list);
-        sb.append(num).append("\n");
-		for (int i : list) {
-			sb.append(i).append("\n");
-		}
+        sb.append(list.size()).append('\n');
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i)).append("\n");
+        }
 
         System.out.println(sb);
     }
 
     public static void dfs(int x, int y) {
         visited[x][y] = true;
-        arr[x][y] = num;
-        count++;
 
         for (int i = 0; i < 4; i++) {
-            nowX = dx[i] + x;
-            nowY = dy[i] + y;
+            int nx = x + dx[i];
+            int ny = y + dy[i];
 
-            if (nowX >= 0 && nowX < N && nowY >= 0 && nowY < N && !visited[nowX][nowY] && arr[nowX][nowY] == 1) {
-                visited[nowX][nowY] = true;
-                arr[nowX][nowY] = num;
+            if (nx >= 0 && nx < N && ny >= 0 && ny < N && !visited[nx][ny] && arr[nx][ny] == 1) {
+                visited[nx][ny] = true;
+                cnt++;
 
-                dfs(nowX, nowY);
+                dfs(nx, ny);
             }
         }
     }
+
 }
